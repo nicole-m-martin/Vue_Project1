@@ -2,12 +2,31 @@
   <h1>{{ title }}</h1>
   <p>Welcome....</p>
   <div v-if="showModal">
-    <Modal :header="header" :text="text" theme="sale" @close="toggleModal" />
+    <!-- SLOTS to inject a Template, with an open and closing Component-->
+    <Modal theme="sale" @close="toggleModal">
+      <!-- Custom Slot Name with v-slot -->
+      <template v-slot:links>
+        <a href="#">Sign up for sale</a>
+        <a href="#">More Info</a>
+      </template>
+      <h1>Sale on Rollerblade's!</h1>
+      <p>Get some blades at half price!</p>
+    </Modal>
   </div>
-  <button @click.alt="toggleModal">open modal (option)</button>
-  <!-- Template Refs -->
-  <!-- <input type="text" ref="name" />
-  <button @click="handleClick">Click Me</button> -->
+
+  <div v-if="showModal2">
+    <Modal @close="toggleModal2">
+      <template v-slot:links2>
+        <a href="#">sale items</a>
+        <a href="#">More Info on Skates</a>
+      </template>
+      <h1>Sale on Rollerskates!</h1>
+      <p>Get some skates at half price!</p>
+    </Modal>
+  </div>
+
+  <button @click="toggleModal">open modal (option)</button>
+  <button @click="toggleModal2">open 2nd modal</button>
 </template>
 
 <script>
@@ -19,21 +38,17 @@ export default {
   data() {
     return {
       title: 'My First Vue App :)',
-      header: 'Welcome!',
-      text: 'Join The Party Now',
       showModal: false,
+      showModal2: false,
     };
   },
   methods: {
     toggleModal() {
       this.showModal = !this.showModal;
     },
-    // Template Refs
-    // handleClick() {
-    //   console.log(this.$refs.name);
-    //   this.$refs.name.classList.add('active');
-    //   this.$refs.name.focus();
-    // },
+    toggleModal2() {
+      this.showModal2 = !this.showModal2;
+    },
   },
 };
 </script>
